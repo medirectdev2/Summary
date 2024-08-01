@@ -66,4 +66,4 @@ jobs:
         with:
           app-name: 'ReportGen'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_FB4FAA84AD7C436E851DE851DDBF4F87 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_7E7C7767893942949D61D63F21A5B4EB }}

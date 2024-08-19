@@ -1,8 +1,8 @@
-from langchain_openai import OpenAIEmbeddings
+from langchain_community.embeddings import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
 from dotenv import load_dotenv
-from langchain_openai import ChatOpenAI
-from langchain_core.prompts import ChatPromptTemplate
+from langchain_community.chat_models import ChatOpenAI
+from langchain.prompts import ChatPromptTemplate
 from langchain.chains import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_community.document_loaders import TextLoader
@@ -18,7 +18,6 @@ from PIL import Image
 from tqdm import tqdm
 import random
 from llama_parse import LlamaParse
-
 load_dotenv()
 
 llm = ChatOpenAI(model='gpt-4o', temperature=0.0)

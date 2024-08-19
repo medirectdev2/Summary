@@ -1,0 +1,340 @@
+/* General body styling */
+body {
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    height: 100vh;   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: hidden; /* Disable horizontal scrolling */
+}
+/* General container styling */
+.container {
+    background: linear-gradient(135deg, #af89dd, #829df3);
+    box-shadow: 0px 4px 8px rgba(66, 66, 66, 0.2);
+    border-radius: 10px;
+    margin: 50px;
+    padding: 40px;
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+/* Header and description */
+h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+/* Dropzone styling */
+.dropzone {
+    border: 5px dashed #0087F7;
+    border-radius: 10px;
+    background-color: #284375;
+    padding: 50px;
+    margin: 20px 0;
+    cursor: pointer;
+}
+
+.dropzone .dz-message {    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.dropzone .dz-message .icon img {
+    width: 30px;
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+/* .dropzone .dz-message span {
+    font-size: 16px;
+    color: #555;
+}
+
+.dropzone .dz-preview .dz-detials {
+    display: none;
+}
+
+.dropzone .dz-preview .dz-progress {
+    display: none;
+} */
+
+/* Progress bar styling */
+#progressBarContainer {
+    margin: 20px 5px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 2px;
+    border-radius: 5px;
+    background-color: #4d81cf;
+    transition: width 0.4s ease;
+}
+
+.search-container {
+    position: relative;
+    display: inline-block;
+}
+
+#searchInput {
+    padding: 10px 40px 10px 20px; /* Adjust padding to make space for the icon */
+    border: 1px solid #ccc;
+    border-radius: 18px;
+    width: 250px; /* Adjust width as needed */
+    font-size: 16px;
+}
+
+#searchButton {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    border: none;
+    background: none;
+    color: #666;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#searchButton:hover {
+    color: #333;
+}
+
+/* Attached documents section */
+.attached-documents {
+    background-color: white;
+    border: 1px dashed gray;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 20px 0;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+}
+
+.attached-documents-title {
+    height: 35px;   
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.attached-documents-label {    
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start;
+    margin: 10px;
+    padding: 0;
+}
+
+.attached-documents-searchbox {    
+    display: flex;
+    flex-direction: row;
+}
+
+.attached-documents h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.attached-documents p {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.attached-documents input[type="text"] {
+    padding: 10px;
+    width: calc(100% - 100px);
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+.attached-documents button {
+    padding: 10px 20px;
+    background-color: #0087F7;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.attached-documents button:hover {
+    background-color: #005bb5;
+}
+
+.attached-documents ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.attached-documents li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.attached-documents .filename {
+    flex: 2;
+}
+
+.attached-documents .file-size,
+.attached-documents .date-uploaded,
+.attached-documents .last-updated {
+    flex: 1;
+}
+
+.attached-documents .delete-button,
+.attached-documents .edit-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.attached-documents .edit-button {
+    background-color: #ff9800;
+}
+
+.attached-documents .delete-button:hover {
+    background-color: #d32f2f;
+}
+
+.attached-documents .edit-button:hover {
+    background-color: #e68900;
+}
+
+/* Generate and reset buttons */
+#generateReportButton,
+#resetButton {
+    padding: 10px 20px;
+    background-color: #0087F7;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 20px 10px;
+}
+
+#generateReportButton:hover,
+#resetButton:hover {
+    background-color: #005bb5;
+}
+
+/* Download button styling */
+#downloadButton {
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+#downloadButton:hover {
+    background-color: #388e3c;
+}
+
+#fileItemTemplate {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+}
+
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10000;
+}
+
+.toast {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transition: opacity 0.5s, transform 0.5s;
+    transform: translateY(-20px);
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast.hide {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+/* Spinner overlay */
+.spinner-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Make sure it is above other elements */
+    display: none; /* Initially hidden */
+}
+
+/* Spinner element */
+.spinner {
+    border: 8px solid #f3f3f3; /* Light grey */
+    border-top: 8px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.ai-processing-message {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #333;
+    text-align: center;
+}
+
+.title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between
+}
+
+.logo {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}

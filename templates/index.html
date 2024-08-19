@@ -1,174 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MEDirect Auto-Report Generator</title>
-    <!-- Include Font Awesome -->
+    <title>AI Document Report Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.js"></script>
     <style>
-        body {
-            background: linear-gradient(135deg, #6e8efb, #a777e3);
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0;
-            font-family: Arial, sans-serif;
-            overflow: hidden;
-        }
-        .container {
-            background-color: black;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            color: blue;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            width: 600px; /* Set desired width */
-            height: 350px; /* Set desired height */
-            display: flex;
-            flex-direction: column;
-            justify-content: center; /* Center content vertically */
-            align-items: center; /* Center content horizontally */
-            position: relative;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-        }
-        .container.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        h1 {
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #6e8efb, #a777e3);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        p {
-            font-weight: 400;
-        }
-        .form-group {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-            color: white;
-            width: 100%;
-            position: relative;
-        }
-        .form-group-button {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            margin-top: 20px;
-        }
-        label {
-            margin-right: 10px;
-            flex: 1;
-            text-align: right;
-        }
-        input[type="file"] {
-            display: none;
-        }
-        select, input[type="text"] {
-            flex: 4;
-            padding: 10px;
-            border-radius: 5px;
-            border: none;
-            padding-right: 40px; /* space for the icon */
-            position: relative;
-        }
-        input[type="text"] {
-            background-color: #f0f0f0;
-        }
-        .upload-icon {
-            position: absolute;
-            right: 10px; /* Position the icon at the very right */
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            font-size: 20px; /* Adjust icon size if needed */
-            color: #007bff; /* Change icon color if needed */
-        }
-        .generate-button {
-            background-color: #007bff;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold; /* Make the button text bold */
-        }
-        .generate-button:disabled {
-            background-color: #7a7a7a; /* Gray out the button when disabled */
-            cursor: not-allowed;
-        }
-        .powered-by {
-            position: absolute;
-            bottom: 10px;
-            right: 20px;
-            color: white;
-            font-size: 12px;
+        .dropzone .icon {
+            color: grey; /* Set the icon color to grey */
         }
     </style>
 </head>
+
 <body>
-    <div class="container" id="container">
-        <h1>Welcome to MEDirect Auto-Report Generator</h1>
-        <form id="report-form" method="POST" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="report-type">Report Type</label>
-                <select id="report-type" name="report-type">
-                    <option value="">Select Type</option>
-                    <option value="Pain Assessment">Pain Assessment</option>
-                    <option value="Suplementary Report">Suplementary Report</option>
-                    <option value="Report Template - 130 Week">Report Template - 130 Week</option>
-                    <option value="Report Template - 130 Week - Woolworths Questions">Report Template - 130 Week - Woolworths Questions</option>
-                    <option value="Impairment Report">Impairment Report</option>
-                    <option value="Case Notes">Case Notes</option>
-                </select>
+    <div class="toast-container" id="toastContainer"></div>
+    <div class="container">
+        <div class="title">
+            <div style="display:flex;flex-direction:column;align-items:flex-start;text-algin:left;">
+                <h1>AI Document Report Generator</h1>
+                <p>Upload the LOI, IME Reports and Report Template to get concise summaries quickly.</p>
             </div>
-            <div class="form-group">
-                <label for="report-template">Report Template</label>
-                <input type="file" id="report-template" name="report-template" accept=".pdf, .docx" onchange="document.getElementById('report-template-name').value = this.files[0].name">
-                <input type="text" id="report-template-name" readonly placeholder="Upload Report Template" onclick="document.getElementById('report-template').click()">
-                <i class="fas fa-upload upload-icon" onclick="document.getElementById('report-template').click()"></i>
+            <div class="logo">
+                <h2 style="margin-right:20px;">Powered by</h2>
+                <img src="{{ url_for('static', filename='assets/logo.png')}}" alt="MEDirect" style="max-width: 100px; height:auto; margin-bottom: 10px;">
             </div>
-            <div class="form-group">
-                <label for="raw-file">Upload RAW File</label>
-                <input type="file" id="raw-file" name="raw-file" accept=".pdf, .docx" onchange="document.getElementById('raw-file-name').value = this.files[0].name">
-                <input type="text" id="raw-file-name" readonly placeholder="Upload RAW File" onclick="document.getElementById('raw-file').click()">
-                <i class="fas fa-upload upload-icon" onclick="document.getElementById('raw-file').click()"></i>
-            </div>
-            
-            <div class="form-group-button">
-                <button type="submit" class="generate-button" id="generate-button" disabled>Generate Report</button>
+        </div>
+
+        <form action="{{ url_for('upload') }}" class="dropzone" id="my-awesome-dropzone">
+            <div class="dz-message">
+                <div class="icon">
+                    <i class="fas fa-cloud-upload-alt fa-3x"></i>
+                </div>
+                <div>
+                    <span>Click to upload or drag and drop</span>
+                </div>
             </div>
         </form>
-        <div class="powered-by">Powered by MEDirect</div>
+        <div class="attached-documents">
+            <div class="attached-documents-title">
+                <div class="attached-documents-label">
+                    <h3>Attached Documents</h2>
+                    <p style="margin-top:-10px;">Files and assets that have been attached to this report.</p>                    
+                </div>
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search Documents">
+                    <button id="searchButton"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+            <!-- Select All checkbox -->
+            <div id="selectAllContainer" style="display: flex; align-items: center; margin-left: 10px;margin-top: 30px; margin-bottom: -10px;">
+                <input type="checkbox" id="selectAllCheckbox" style="margin-right: 10px;">
+                <label for="selectAllCheckbox">Select All</label>
+            </div>
+            <ul id="fileList"></ul>
+        </div>
+        <div id="progressBarContainer">
+            <div id="progressBar" class="progress-bar"></div>
+        </div>
+        <button id="generateReportButton">Generate Report</button>
+        <button id="resetButton">Reset Application</button>
+        <div id="downloadButtonContainer" style="display: none;">
+            <button id="downloadButton"></button>
+        </div>
+        <div class="spinner-overlay" id="spinnerOverlay">
+            <div class="spinner"></div>
+            <div id="aiProcessingMessage" class="ai-processing-message">Report is being analyzed by AI. Please do not close the tab or take any actions that could interrupt the process. It will be completed shortly.</div>
+        </div>            
     </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            document.getElementById("container").classList.add("visible");
-            
-            const reportType = document.getElementById("report-type");
-            const reportTemplate = document.getElementById("report-template");
-            const rawFile = document.getElementById("raw-file");
-            const generateButton = document.getElementById("generate-button");
-
-            function checkFormValidity() {
-                if (reportType.value && reportTemplate.files.length > 0 && rawFile.files.length > 0) {
-                    generateButton.disabled = false;
-                } else {
-                    generateButton.disabled = true;
-                }
-            }
-
-            reportType.addEventListener("change", checkFormValidity);
-            reportTemplate.addEventListener("change", checkFormValidity);
-            rawFile.addEventListener("change", checkFormValidity);
-        });
-    </script>
+    <!-- Template for file list items -->
+    <template id="fileItemTemplate">
+        <li style="display: flex; flex-direction: row; align-items:center; padding: 10px">
+            <input type="checkbox" class="include-in-process" style="margin-right: 10px;">
+            <span class="filename"></span>
+            <span class="file-size"></span>
+            <span class="date-uploaded"></span>
+            <span class="last-updated"></span>
+            <button class="delete-button" style="margin-right: 10px;">Delete</button>
+            <button class="edit-button">Edit</button>
+        </li>
+    </template>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 </body>
+
 </html>
